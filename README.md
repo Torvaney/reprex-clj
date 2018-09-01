@@ -12,3 +12,34 @@ snippets](https://get.slack.help/hc/en-us/articles/204145658-Create-a-snippet).
 What is a `reprex`? It’s a **repr**oducible **ex**ample, as coined by
 [Romain
 Francois](https://twitter.com/romain_francois/status/530011023743655936).
+
+# Usage
+
+Use the `reprex` function to easily capture expressions and their outputs:
+
+~~~
+user=> (require '[reprex.core :refer [reprex]])
+nil
+user=> (->> (reprex (+ 1 1) (* 5 5)) println)
+``` clojure
+(+ 1 1)
+; => 2
+
+(* 5 5)
+; => 25
+```
+
+Created by [reprex](https://github.com/Torvaney/reprex-clj)
+nil
+~~~
+
+This GitHub-flavored Markdown is the ready to be copied and pasted. When
+rendered, it would look like this:
+
+``` clojure
+(+ 1 1)
+; => 2
+
+(* 5 5)
+; => 25
+```
