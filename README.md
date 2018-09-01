@@ -14,11 +14,30 @@ This is a clojure port of the `tidyverse/reprex` [package for R](https://github.
 
 # Usage
 
-Use the `reprex` function to easily capture expressions and their outputs:
+Use the `reprex` function to easily capture expressions and their outputs.
+
+With no arguments, reprex will read code from the clipboard:
 
 ~~~
 user=> (require '[reprex.core :refer [reprex]])
 nil
+user=> (println (reprex))
+``` clojure
+(+ 1 1)
+; => 2
+
+(* 5 5)
+; => 25
+```
+
+Created by [reprex](https://github.com/Torvaney/reprex-clj)
+nil
+user=>
+~~~
+
+Alternatively, you can supply expressions as arguments:
+
+~~~
 user=> (->> (reprex (+ 1 1) (* 5 5)) println)
 ``` clojure
 (+ 1 1)
@@ -33,7 +52,7 @@ nil
 user=>
 ~~~
 
-This GitHub-flavored Markdown is the ready to be copied and pasted. When
+This GitHub-flavored Markdown is then ready to be copied and pasted. When
 rendered, it would look like this:
 
 ``` clojure
