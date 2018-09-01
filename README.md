@@ -30,6 +30,19 @@ user=> (println (reprex))
 ; => 25
 ```
 
+<details><summary>Session info</summary>
+
+```
+Clojure version:
+	1.8.0
+Java version:
+	java version "1.8.0_102"
+	Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
+	Java HotSpot(TM) 64-Bit Server VM (build 25.102-b14, mixed mode)
+```
+
+</details>
+
 Created by [reprex](https://github.com/Torvaney/reprex-clj)
 nil
 user=>
@@ -37,23 +50,12 @@ user=>
 
 Alternatively, you can supply expressions as arguments:
 
-~~~
-user=> (->> (reprex (+ 1 1) (* 5 5)) println)
-``` clojure
-(+ 1 1)
-; => 2
-
-(* 5 5)
-; => 25
 ```
-
-Created by [reprex](https://github.com/Torvaney/reprex-clj)
-nil
-user=>
-~~~
+user=> (->> (reprex (+ 1 1) (* 5 5)) println)
+```
 
 This GitHub-flavored Markdown is then ready to be copied and pasted. When
-rendered, it would look like this:
+rendered, it would looks this:
 
 ``` clojure
 (+ 1 1)
@@ -62,5 +64,18 @@ rendered, it would look like this:
 (* 5 5)
 ; => 25
 ```
+
+<details><summary>Session info</summary>
+
+```
+Clojure version:
+	1.8.0
+Java version:
+	java version "1.8.0_102"
+	Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
+	Java HotSpot(TM) 64-Bit Server VM (build 25.102-b14, mixed mode)
+```
+
+</details>
 
 Created by [reprex](https://github.com/Torvaney/reprex-clj)

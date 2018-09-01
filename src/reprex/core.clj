@@ -1,12 +1,39 @@
 (ns reprex.core
-  (:require [reprex.clipboard :as clip]))
+  (:require
+    [clojure.java.shell :refer [sh]]
+    [reprex.clipboard :as clip]))
 
 
 ;; Options (TODO: make arguments to reprex)
 (def prompt  "; => ")
 (def spacing "\n\n")
 
-;; Rendering
+;; Rendering + metadata
+
+(defn java-version
+  "Get the current java version"
+  []
+  (->> (sh "java" "-version")
+       :err
+       (#(clojure.string/split % #"\n"))
+       (map #(str "\t" %))
+       (clojure.string/join "\n")))
+
+
+(defn session-info
+  "Get the current clojure session's information."
+  []
+  (str "\n```\n"
+       "Clojure version:\n\t" (clojure-version) "\n"
+       "Java version:\n" (java-version) "\n"
+       "```\n"))
+
+
+(defn markdown-details
+  "Hide some text in a foldable section."
+  [summary content]
+  (str "<details><summary>" summary "</summary>\n" content "\n</details>"))
+
 
 (defn embed-markdown
   "Embed a string containing code into a markdown chunk."
@@ -14,6 +41,7 @@
   (str "``` clojure\n"
        code "\n"
        "```\n\n"
+       (markdown-details "Session info" (session-info)) "\n\n"
        "Created by [reprex](https://github.com/Torvaney/reprex-clj)"))
 
 
@@ -42,7 +70,6 @@
       (recur `(conj ~evald (capture-expr ~expr)) (rest unevald))
       `(reverse ~evald))))
 
-
 ;; Managing namespaces
 ;; (from https://stackoverflow.com/questions/27343707/i-would-like-to-run-load-file-in-a-sandboxed-namespace-in-clojure)
 
@@ -69,9 +96,8 @@
 
 ;; Reprex
 
-
 (defmacro reprex
-  "Create a reproducible example. With 0 arguments, reprex will attempt to read
+  "Create a reproducible example. With no arguments, reprex will attempt to read
    code from the clipboard, otherwise it will evaluate any expressions provided
    as arguments."
   ([]

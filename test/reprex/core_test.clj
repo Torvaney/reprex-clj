@@ -9,7 +9,8 @@
     (is (= "(* 5 5)\n; => 25" (capture-expr (* 5 5))))
     (is (= "(- 5 2)\n; => 3"  (capture-expr (- 5 2))))
     ;; Common fns
-    ; (is (= "(require 'clojure.string)\n; => " (capture-expr (require 'clojure.string))))
+    (is (= "(require (quote clojure.string))\n; => "
+           (capture-expr (require 'clojure.string))))
     ))
 
 
@@ -24,12 +25,13 @@
            (capture-exprs ((+ 1 1) (* 5 5) (- 5 2)))))))
 
 
-(deftest test-reprex
-  (testing "Reprex is created as expected"
-    (is (= "``` clojure\n(+ 1 1)\n; => 2\n```\n\nCreated by [reprex](https://github.com/Torvaney/reprex-clj)"
-           (reprex (+ 1 1)))
-    (is (= "``` clojure\n(+ 1 1)\n; => 2\n\n(* 5 5)\n; => 25\n```\n\nCreated by [reprex](https://github.com/Torvaney/reprex-clj)"
-           (reprex (+ 1 1) (* 5 5)))))))
+; (deftest test-reprex
+;   (testing "Reprex is created as expected"
+;     (is (= "``` clojure\n(+ 1 1)\n; => 2\n```\n\nCreated by [reprex](https://github.com/Torvaney/reprex-clj)"
+;            (reprex (+ 1 1)))
+;     (is (= "``` clojure\n(+ 1 1)\n; => 2\n\n(* 5 5)\n; => 25\n```\n\nCreated by [reprex](https://github.com/Torvaney/reprex-clj)"
+;            (reprex (+ 1 1) (* 5 5)))))))
+
 
 (def test-sym 1)
 
