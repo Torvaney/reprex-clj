@@ -1,4 +1,5 @@
-(ns reprex.core)
+(ns reprex.core
+  (:require [reprex.clipboard :as clip]))
 
 
 ;; Options (TODO: make arguments to reprex)
@@ -41,6 +42,11 @@
 
 
 (defmacro reprex
-  "Create a reproducible example."
-  [& exprs]
-  `(->> (capture-exprs ~exprs) (render-captured spacing)))
+  "Create a reproducible example. With 0 arguments, reprex will attempt to read
+   code from the clipboard, otherwise it will evaluate any expressions provided
+   as arguments."
+  ([]
+    (let [code (read-string (clip/slurp-clipboard))]
+      `(reprex ~code)))
+  ([& exprs]
+     `(->> (capture-exprs ~exprs) (render-captured spacing))))
