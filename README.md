@@ -3,7 +3,7 @@
 [![travis status](https://travis-ci.org/Torvaney/reprex-clj.svg?branch=master)](https://travis-ci.org/Torvaney/reprex-clj)
 [![code coverage](https://codecov.io/gh/Torvaney/reprex-clj/branch/master/graph/badge.svg)](https://codecov.io/github/Torvaney/reprex-clj?branch=master)
 
-Based on the `tidyverse/reprex` [package for R](https://github.com/tidyverse/reprex).
+A clojure port of the `tidyverse/reprex` [package for R](https://github.com/tidyverse/reprex).
 
 Prepare reprexes for posting to [GitHub
 issues](https://guides.github.com/features/issues/),
@@ -31,6 +31,7 @@ user=> (->> (reprex (+ 1 1) (* 5 5)) println)
 
 Created by [reprex](https://github.com/Torvaney/reprex-clj)
 nil
+user=>
 ~~~
 
 This GitHub-flavored Markdown is the ready to be copied and pasted. When
@@ -43,3 +44,5 @@ rendered, it would look like this:
 (* 5 5)
 ; => 25
 ```
+
+Created by [reprex](https://github.com/Torvaney/reprex-clj)
