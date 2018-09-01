@@ -23,3 +23,11 @@
            (capture-exprs ((+ 1 1) (* 5 5)))))
     (is (= '("(+ 1 1)\n; => 2" "(* 5 5)\n; => 25" "(- 5 2)\n; => 3")
            (capture-exprs ((+ 1 1) (* 5 5) (- 5 2)))))))
+
+
+(deftest test-reprex
+  (testing "Reprex is created as expected"
+    (is (= "``` clojure\n(+ 1 1)\n; => 2\n```\n\nCreated by [reprex](https://github.com/Torvaney/reprex-clj)"
+           (reprex (+ 1 1)))
+        (= "``` clojure\n(+ 1 1)\n; => 2\n\n(* 5 5)\n; => 25\n```\n\nCreated by [reprex](https://github.com/Torvaney/reprex-clj)"
+           (reprex (+ 1 1) (* 5 5))))))
