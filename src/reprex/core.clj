@@ -50,26 +50,6 @@
   [spacing xs]
   (-> (clojure.string/join spacing xs) embed-markdown))
 
-;; Capturing & evaluating expressions
-
-(defmacro capture-expr
-  "Capture an expression and its output."
-  [expr]
-  (let [expr-str (str expr)
-        eval-str (str (eval expr))]
-    (str expr-str "\n"
-         prompt   eval-str)))
-
-
-(defmacro capture-exprs
-  "Capture any number of expressions with their output."
-  [exprs]
-  (loop [evald   (list)
-         unevald exprs]
-    (if-let [expr (first unevald)]
-      (recur `(conj ~evald (capture-expr ~expr)) (rest unevald))
-      `(reverse ~evald))))
-
 ;; Managing namespaces
 ;; (from https://stackoverflow.com/questions/27343707/i-would-like-to-run-load-file-in-a-sandboxed-namespace-in-clojure)
 
@@ -94,8 +74,29 @@
        result#)
      (finally (remove-ns 'sym#))))
 
+;; Capturing & evaluating expressions
+
+(defmacro capture-expr
+  "Capture an expression and its output."
+  [expr]
+  (let [expr-str (str expr)
+        eval-str (str (eval expr))]
+    (str expr-str "\n"
+         prompt   eval-str)))
+
+
+(defmacro capture-exprs
+  "Capture any number of expressions with their output."
+  [exprs]
+  (loop [evald   (list)
+         unevald exprs]
+    (if-let [expr (first unevald)]
+      (recur `(conj ~evald (capture-expr ~expr)) (rest unevald))
+      `(reverse ~evald))))
+
 ;; Reprex
 
+;; TODO use temp-ns in new macro; keep eval and render separate
 (defmacro reprex
   "Create a reproducible example. With no arguments, reprex will attempt to read
    code from the clipboard, otherwise it will evaluate any expressions provided
@@ -104,4 +105,5 @@
      (let [code (read-string (clip/slurp-clipboard))]
        `(reprex ~code)))
   ([& body]
-     `(with-temp-ns (->> (capture-exprs ~body) (render-captured spacing)))))
+     (let [form `(with-temp-ns (->> (capture-exprs ~body) (render-captured spacing)))]
+       `(do (clip/spit-clipboard (eval ~form)) ~form))))
