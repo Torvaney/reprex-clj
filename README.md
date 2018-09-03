@@ -55,7 +55,7 @@ user=> (->> (reprex (+ 1 1) (* 5 5)) println)
 ```
 
 This GitHub-flavored Markdown is then ready to be copied and pasted. When
-rendered, it would looks this:
+rendered, it looks like this:
 
 ``` clojure
 (+ 1 1)
