@@ -8,7 +8,6 @@
 
 (deftest test-empty-clipboard
   (testing "Can slurp from clipboard (sort of...)"
-    (do
-      (spit-clipboard "test-spit")
-      (is (= "test-spit" (slurp-clipboard))))))
+    (is (= "test-spit" (do (spit-clipboard "test-spit") (slurp-clipboard))))
+    (is (= "123456789" (do (spit-clipboard "123456789") (slurp-clipboard))))))
 
